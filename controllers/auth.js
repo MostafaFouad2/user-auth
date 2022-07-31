@@ -74,7 +74,7 @@ exports.active = async (req, res) => {
                 res.send(err);
               } else {
                 const newtoken = jwt.sign(
-                    { _id: user._id, email, isActive:user.isActive, token:user.token },
+                    { _id: user._id, email:user.email, isActive:user.isActive, token:user.token },
                         config.TOKEN_KEY,
                     {
                         expiresIn: "24h",

@@ -14,7 +14,9 @@ exports.verifyToken = (req, res, next) => {
 
     const user = await User.findById(decoded._id);
 
-    if(user.token!=decoded.token){
+    
+
+    if(!user||(user.token!=decoded.token)){
       return res.status(401).send({ message: "token expire login again" });
     }
 
