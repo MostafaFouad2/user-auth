@@ -4,7 +4,6 @@ const User = mongoose.model(
   new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
     required: true
   },
   email: {
@@ -14,7 +13,7 @@ const User = mongoose.model(
   },
   phoneNumber: {
     type: String,
-    unique: true,
+    unique: [true, 'this phone exist'],
     required: true,
     minLength:[10, 'phNr min 8']
   },

@@ -24,10 +24,4 @@ router.post('/resetpass',isAuth.verifyTokenShort ,authController.resetpass);
 
 
 
-
-
-
-
-
-
 module.exports = router;

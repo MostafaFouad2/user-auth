@@ -14,8 +14,8 @@ exports.signup = async (req, res) => {
             return res.status(400).send("All input is required");
         }
 
-        const exUser = await User.findOne({ email });
-
+        const exUser = await User.findOne({$or:[{email},{phoneNumber}]});
+        
         if (exUser) {
             return res.status(409).send("User Already Exist. Please Login");
           }
@@ -64,22 +64,23 @@ exports.active = async (req, res) => {
           }
 
           
+        const token = (Math.floor(Math.random() * 10000000)+1000000).toString();
 
         await User.findByIdAndUpdate(
             { _id: user._id },
-            { isActive: true, verCode: null },
+            { isActive: true, verCode: null,token },
             function(err, result) {
               if (err) {
                 res.send(err);
               } else {
-                const token = jwt.sign(
+                const newtoken = jwt.sign(
                     { _id: user._id, email, isActive:user.isActive, token:user.token },
                         config.TOKEN_KEY,
                     {
                         expiresIn: "24h",
                     }
                 );
-                res.send({ message:"your acc is active Now",token:token} );
+                res.send({ message:"your acc is active Now",token:newtoken} );
               }
             }
           );
